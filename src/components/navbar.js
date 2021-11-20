@@ -10,12 +10,22 @@ function Navbar(props) {
         <nav className="navbar navbar-dark bg-dark">
             <div className="container-fluid">
                 <span className="navbar-brand mb-0 h1">Pic Load</span>
-                <button
-                    className="btn btn-outline-light"
-                    onClick={handleLoginClick}
-                >
-                    Login
-                </button>
+
+                {props.user && props.user.id ? (
+                    <button
+                        className="btn btn-outline-danger"
+                        onClick={props.onRemoveUser}
+                    >
+                        Logout
+                    </button>
+                ) : (
+                    <button
+                        className="btn btn-outline-light"
+                        onClick={handleLoginClick}
+                    >
+                        Login
+                    </button>
+                )}
             </div>
         </nav>
     );

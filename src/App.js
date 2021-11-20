@@ -1,25 +1,68 @@
+import React from "react";
+
 import Navbar from "./components/navbar";
 import "react-toastify/dist/ReactToastify.min.css";
 
+import { connect } from "react-redux";
+import { setUser, removeUser } from "./actions/userActions";
+
 import { ToastContainer } from "react-toastify";
-import { Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router";
 import Login from "./components/login/login";
 import Home from "./components/home/home";
 
-function App() {
-    return (
-        <div
-            className="d-flex bg-gradient flex-column"
-            style={{ height: "100vh" }}
-        >
-            <ToastContainer />
-            <Navbar />
-            <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/" component={Home} />
-            </Switch>
-        </div>
-    );
+class App extends React.Component {
+    render() {
+        return (
+            <div
+                className="d-flex bg-gradient flex-column"
+                style={{ height: "100vh" }}
+            >
+                <ToastContainer />
+                <Navbar
+                    user={this.props.user}
+                    onRemoveUser={this.props.removeUser}
+                />
+                <Switch>
+                    <Route
+                        path="/login"
+                        render={(props) => (
+                            <Login {...props} user={this.props.user} />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/"
+                        render={(props) => (
+                            <Home
+                                {...props}
+                                user={this.props.user}
+                                onSetUser={this.props.setUser}
+                            />
+                        )}
+                    />
+                    <Redirect to="/" />
+                </Switch>
+            </div>
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUser: (user) => {
+            dispatch(setUser(user));
+        },
+        removeUser: () => {
+            dispatch(removeUser());
+        },
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
