@@ -1,6 +1,6 @@
 const defaultUser = {
     id: undefined,
-    userName: "Guest",
+    name: "Guest",
     email: undefined,
 };
 
@@ -10,7 +10,7 @@ const userReducer = (state = { ...defaultUser }, action) => {
             state = {
                 ...state,
                 id: action.payload.id,
-                userName: action.payload.userName,
+                name: action.payload.name,
                 email: action.payload.email,
             };
             break;

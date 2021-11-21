@@ -9,7 +9,8 @@ import { setUser, removeUser } from "./actions/userActions";
 import { ToastContainer } from "react-toastify";
 import { Redirect, Route, Switch } from "react-router";
 import Login from "./components/login/login";
-import Home from "./components/home/home";
+import Home from "./components/home";
+import AddPost from "./components/addPost";
 
 class App extends React.Component {
     render() {
@@ -31,6 +32,10 @@ class App extends React.Component {
                         )}
                     />
                     <Route
+                        path="/addPost"
+                        render={(props) => <AddPost {...props} />}
+                    />
+                    <Route
                         exact
                         path="/"
                         render={(props) => (
@@ -41,7 +46,7 @@ class App extends React.Component {
                             />
                         )}
                     />
-                    <Redirect to="/" />
+                    <Redirect path="*" to="/" />
                 </Switch>
             </div>
         );
