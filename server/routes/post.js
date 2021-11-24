@@ -1,10 +1,14 @@
 const express = require("express");
 const upload = require("../middleware/upload");
+const multer = require("multer");
+const cors = require("cors");
 
 const router = express.Router();
-
+router.options("*", cors());
 router.post("/createPost", (req, res) => {
+    console.log("file req receved");
     upload(req, res, (err) => {
+        if (err) console.log(err);
         if (err instanceof multer.MulterError) {
             if (err.code === "LIMIT_FILE_SIZE")
                 return res.status(400).json({
@@ -23,7 +27,8 @@ router.post("/createPost", (req, res) => {
                 err,
             });
         }
-        res.send(req.file);
+        console.log("==========body", req.body);
+        res.send({ file: req.file, data: req.body });
     });
 });
 
