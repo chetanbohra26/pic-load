@@ -93,6 +93,7 @@ class Login extends Component {
                             placeholder="name@example.com"
                             value={login.email}
                             onChange={this.handleLoginChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -107,6 +108,7 @@ class Login extends Component {
                             placeholder="(min 6 characters)"
                             value={login.pass}
                             onChange={this.handleLoginChange}
+                            required
                         />
                     </div>
                     <div className="d-flex justify-content-center">
@@ -136,6 +138,7 @@ class Login extends Component {
                             placeholder="Enter your name"
                             value={register.name}
                             onChange={this.handleRegisterChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -150,6 +153,7 @@ class Login extends Component {
                             placeholder="name@example.com"
                             value={register.email}
                             onChange={this.handleRegisterChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -167,6 +171,7 @@ class Login extends Component {
                             placeholder="(min 6 characters)"
                             value={register.pass}
                             onChange={this.handleRegisterChange}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -184,6 +189,7 @@ class Login extends Component {
                             placeholder="(min 6 characters)"
                             value={register.pass2}
                             onChange={this.handleRegisterChange}
+                            required
                         />
                     </div>
                     <div className="d-flex justify-content-center">
