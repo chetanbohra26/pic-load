@@ -1,9 +1,15 @@
 //import { toast } from "react-toastify";
 import { withRouter } from "react-router-dom";
+import { removeToken } from "../util/token";
 
 function Navbar(props) {
     function handleLoginClick() {
         props.history.push("/login");
+    }
+
+    function handleLogoutClick() {
+        removeToken();
+        props.onRemoveUser();
     }
 
     return (
@@ -14,7 +20,7 @@ function Navbar(props) {
                 {props.user && props.user.id ? (
                     <button
                         className="btn btn-outline-danger"
-                        onClick={props.onRemoveUser}
+                        onClick={handleLogoutClick}
                     >
                         Logout
                     </button>

@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const path = require("path");
 
 require("dotenv").config();
 
@@ -16,6 +17,8 @@ const app = express();
 //use cors for dev only
 app.use(cors());
 app.use(express.json());
+
+app.use("/uploads", express.static(path.join(__dirname, "./../uploads")));
 
 app.get("/", (req, res) => {
     res.send({ msg: "Welcome to express" });
