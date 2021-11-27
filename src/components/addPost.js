@@ -1,5 +1,6 @@
-import axios from "axios";
 import React from "react";
+import axios from "axios";
+import ROUTES from "../config/routeConfig.json";
 
 class AddPost extends React.Component {
     constructor(props) {
@@ -10,6 +11,23 @@ class AddPost extends React.Component {
                 postImage: "",
             },
         };
+    }
+
+    componentDidMount() {
+        console.log("addPost:componentDidMount", this.props.user);
+
+        if (!this.props.user?.id) {
+            this.redirectToLogin();
+        }
+    }
+
+    redirectToLogin() {
+        const redirectString = `${ROUTES.LOGIN}?redirect=${ROUTES.ADDPOST}`;
+        this.props.history.replace(redirectString);
+    }
+
+    componentDidUpdate() {
+        if (!this.props.user?.id) this.redirectToLogin();
     }
 
     handleTitleChange = ({ target }) => {

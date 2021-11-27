@@ -1,12 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { toast } from "react-toastify";
+import queryString from "query-string";
+
+import ROUTES from "../../config/routeConfig.json";
 
 import { loginRequest, registerRequest } from "../../util/apiHelper";
-import { saveToken } from "../../util/token";
+import { fetchTokenAndData, saveToken } from "../../util/token";
 
 import "./login.css";
 
-class Login extends Component {
+class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,6 +33,20 @@ class Login extends Component {
         this.setState({ register });
     };
 
+    initUserAndRedirect = () => {
+        const data = fetchTokenAndData();
+        this.props.onSetUser({
+            id: data.id,
+            name: data.name,
+            email: data.email,
+            token: data.token,
+        });
+
+        const query = this.props.location?.search;
+        const { redirect = ROUTES.HOME } = queryString.parse(query);
+        this.props.history?.replace(redirect);
+    };
+
     handleLogin = async (e) => {
         e.preventDefault();
         const { login } = this.state;
@@ -43,12 +60,12 @@ class Login extends Component {
         const token = data.token;
         //console.log(token);
         if (!token) {
-            return toast.error("Unknown error");
+            return toast.error("Unknown error when logging in");
         }
 
         saveToken(token);
         toast.success(data.message);
-        this.props.history.replace("/");
+        this.initUserAndRedirect();
     };
 
     handleRegister = async (e) => {
@@ -68,12 +85,12 @@ class Login extends Component {
 
         const token = data.token;
         if (!token) {
-            return toast.error("Unknown error");
+            return toast.error("Unknown error when logging in");
         }
 
         saveToken(token);
         toast.success(data.message);
-        this.props.history.replace("/");
+        this.initUserAndRedirect();
     };
 
     getLoginContent = () => {

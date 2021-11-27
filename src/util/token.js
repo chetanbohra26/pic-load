@@ -23,9 +23,7 @@ export const fetchTokenAndData = () => {
     if (!token) return;
 
     const payload = jwt.decode(token);
+    payload["token"] = token;
 
-    return {
-        token,
-        payload,
-    };
+    return payload;
 };

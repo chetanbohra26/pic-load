@@ -2,6 +2,7 @@ const defaultUser = {
     id: undefined,
     name: "Guest",
     email: undefined,
+    token: undefined,
 };
 
 const userReducer = (state = { ...defaultUser }, action) => {
@@ -12,6 +13,7 @@ const userReducer = (state = { ...defaultUser }, action) => {
                 id: action.payload.id,
                 name: action.payload.name,
                 email: action.payload.email,
+                token: action.payload.token,
             };
             break;
         case "USER/REMOVE_USER":

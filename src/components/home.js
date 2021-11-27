@@ -1,18 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { toast } from "react-toastify";
-import { fetchTokenAndData } from "../util/token";
 
-class Home extends Component {
-    componentDidMount() {
-        const data = fetchTokenAndData();
-        if (data && data.payload) {
-            this.props.onSetUser({
-                id: data.payload.id,
-                name: data.payload.name,
-                email: data.payload.email,
-            });
-        }
-    }
+class Home extends React.Component {
     getUserGreeting() {
         const name = this.props.user.name;
         return `Welcome ${name}`;
