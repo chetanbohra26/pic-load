@@ -6,7 +6,7 @@ import { fetchTokenAndData } from "./util/token";
 const data = fetchTokenAndData();
 
 const store = createStore(combineReducers({ user: userReducer }), {
-    user: data,
+	user: data,
 });
 
 export default store;

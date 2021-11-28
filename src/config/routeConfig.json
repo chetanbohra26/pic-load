@@ -1,5 +1,5 @@
 {
-    "LOGIN": "/login",
-    "HOME": "/",
-    "ADDPOST": "/addPost"
+	"LOGIN": "/login",
+	"HOME": "/",
+	"ADDPOST": "/addPost"
 }

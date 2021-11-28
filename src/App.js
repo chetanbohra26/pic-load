@@ -15,71 +15,71 @@ import Home from "./components/home";
 import AddPost from "./components/addPost";
 
 class App extends React.Component {
-    componentDidMount() {
-        console.log("App:componentDidMount", this.props.user);
-    }
+	componentDidMount() {
+		console.log("App:componentDidMount", this.props.user);
+	}
 
-    render() {
-        return (
-            <div
-                className="d-flex bg-gradient flex-column"
-                style={{ height: "100vh" }}
-            >
-                <ToastContainer />
-                <Navbar
-                    user={this.props.user}
-                    onRemoveUser={this.props.removeUser}
-                />
-                <Switch>
-                    <Route
-                        path={ROUTES.LOGIN}
-                        render={(props) => (
-                            <Login
-                                {...props}
-                                user={this.props.user}
-                                onSetUser={this.props.setUser}
-                            />
-                        )}
-                    />
-                    <Route
-                        path={ROUTES.ADDPOST}
-                        render={(props) => (
-                            <AddPost {...props} user={this.props.user} />
-                        )}
-                    />
-                    <Route
-                        exact
-                        path={ROUTES.HOME}
-                        render={(props) => (
-                            <Home
-                                {...props}
-                                user={this.props.user}
-                                onSetUser={this.props.setUser}
-                            />
-                        )}
-                    />
-                    <Redirect path="*" to={ROUTES.HOME} />
-                </Switch>
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div
+				className="d-flex bg-gradient flex-column"
+				style={{ height: "100vh" }}
+			>
+				<ToastContainer />
+				<Navbar
+					user={this.props.user}
+					onRemoveUser={this.props.removeUser}
+				/>
+				<Switch>
+					<Route
+						path={ROUTES.LOGIN}
+						render={(props) => (
+							<Login
+								{...props}
+								user={this.props.user}
+								onSetUser={this.props.setUser}
+							/>
+						)}
+					/>
+					<Route
+						path={ROUTES.ADDPOST}
+						render={(props) => (
+							<AddPost {...props} user={this.props.user} />
+						)}
+					/>
+					<Route
+						exact
+						path={ROUTES.HOME}
+						render={(props) => (
+							<Home
+								{...props}
+								user={this.props.user}
+								onSetUser={this.props.setUser}
+							/>
+						)}
+					/>
+					<Redirect path="*" to={ROUTES.HOME} />
+				</Switch>
+			</div>
+		);
+	}
 }
 
 const mapStateToProps = (state) => {
-    return {
-        user: state.user,
-    };
+	return {
+		user: state.user,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        setUser: (user) => {
-            dispatch(setUser(user));
-        },
-        removeUser: () => {
-            dispatch(removeUser());
-        },
-    };
+	return {
+		setUser: (user) => {
+			dispatch(setUser(user));
+		},
+		removeUser: () => {
+			dispatch(removeUser());
+		},
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

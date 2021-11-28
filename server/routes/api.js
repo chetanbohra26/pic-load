@@ -8,7 +8,7 @@ router.use("/auth", authRouter);
 router.use("/post", postRouter);
 
 router.get("/", (req, res) => {
-    res.send({ msg: "Welcome to api" });
+	res.send({ msg: "Welcome to api" });
 });
 
 module.exports = router;

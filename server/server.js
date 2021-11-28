@@ -6,8 +6,8 @@ const path = require("path");
 require("dotenv").config();
 
 mongoose.connect(process.env.MONGODB_URL, (err) => {
-    if (err) throw err;
-    console.log("Connected to mongodb");
+	if (err) throw err;
+	console.log("Connected to mongodb");
 });
 
 const apiRouter = require("./routes/api");
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "./../uploads")));
 
 app.get("/", (req, res) => {
-    res.send({ msg: "Welcome to express" });
+	res.send({ msg: "Welcome to express" });
 });
 
 app.use("/api", apiRouter);
