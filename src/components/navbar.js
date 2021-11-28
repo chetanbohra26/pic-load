@@ -20,6 +20,7 @@ function Navbar(props) {
 					<Link
 						to={ROUTES.HOME}
 						style={{ textDecoration: "none", color: "white" }}
+						title="Home"
 					>
 						Pic Load
 					</Link>
@@ -29,6 +30,7 @@ function Navbar(props) {
 					<button
 						className="btn btn-outline-danger"
 						onClick={handleLogoutClick}
+						title="Logout"
 					>
 						Logout
 					</button>
@@ -36,6 +38,7 @@ function Navbar(props) {
 					<button
 						className="btn btn-outline-light"
 						onClick={handleLoginClick}
+						title="Login"
 					>
 						Login
 					</button>

@@ -10,7 +10,7 @@ import ROUTES from "./config/routeConfig.json";
 
 import { ToastContainer } from "react-toastify";
 import { Redirect, Route, Switch } from "react-router";
-import Login from "./components/login/login";
+import Login from "./components/login";
 import Home from "./components/home";
 import AddPost from "./components/addPost";
 

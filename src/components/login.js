@@ -2,12 +2,10 @@ import React from "react";
 import { toast } from "react-toastify";
 import queryString from "query-string";
 
-import ROUTES from "../../config/routeConfig.json";
+import ROUTES from "../config/routeConfig.json";
 
-import { loginRequest, registerRequest } from "../../util/apiHelper";
-import { fetchTokenAndData, saveToken } from "../../util/token";
-
-import "./login.css";
+import { loginRequest, registerRequest } from "../util/apiHelper";
+import { fetchTokenAndData, saveToken } from "../util/token";
 
 class Login extends React.Component {
 	constructor(props) {
@@ -18,9 +16,6 @@ class Login extends React.Component {
 			register: { name: "", email: "", pass: "", pass2: "" },
 		};
 	}
-
-	getActiveClasses = () => "";
-	getInactiveClasses = () => "login-inactive";
 
 	handleLoginChange = ({ currentTarget: input }) => {
 		const login = { ...this.state.login };
@@ -128,7 +123,10 @@ class Login extends React.Component {
 						/>
 					</div>
 					<div className="d-flex justify-content-center">
-						<button className="btn btn-primary align-center">
+						<button
+							className="btn btn-primary align-center"
+							title="Login User"
+						>
 							Submit
 						</button>
 					</div>
@@ -209,7 +207,10 @@ class Login extends React.Component {
 						/>
 					</div>
 					<div className="d-flex justify-content-center">
-						<button className="btn btn-primary align-center">
+						<button
+							className="btn btn-primary align-center"
+							title="Register User"
+						>
 							Register
 						</button>
 					</div>
@@ -222,17 +223,23 @@ class Login extends React.Component {
 		return (
 			<div className="row m-0 p-4 justify-content-center">
 				<div className="card col col-sm-12 col-md-9 col-lg-6 mx-auto p-0">
-					<div className="d-flex">
+					<div className="card-header p-0 d-flex">
 						<ul className="nav nav-fill w-100">
 							<li className="nav-item flex-fill">
 								<button
-									className={`nav-link p-3 border-0 bg-white text-black fw-bolder fs-5 ${
-										this.state.isLogin
-											? this.getActiveClasses()
-											: this.getInactiveClasses()
-									}`}
+									className="nav-link p-3 border-0 bg-white text-black fw-bolder fs-5"
 									onClick={() =>
 										this.setState({ isLogin: true })
+									}
+									style={
+										!this.state.isLogin
+											? {
+													backgroundColor: "gray",
+													boxShadow:
+														"0 0 1rem 0.02rem inset rgb(202, 202, 202)",
+													color: "red",
+											  }
+											: {}
 									}
 								>
 									Login
@@ -240,11 +247,16 @@ class Login extends React.Component {
 							</li>
 							<li className="nav-item">
 								<button
-									className={`nav-link p-3 border-0 bg-white text-black fw-bolder fs-5 ${
-										!this.state.isLogin
-											? this.getActiveClasses()
-											: this.getInactiveClasses()
-									}`}
+									className="nav-link p-3 border-0 bg-white text-black fw-bolder fs-5"
+									style={
+										this.state.isLogin
+											? {
+													backgroundColor: "gray",
+													boxShadow:
+														"0 0 1rem 0.02rem inset rgb(202, 202, 202)",
+											  }
+											: {}
+									}
 									onClick={() =>
 										this.setState({ isLogin: false })
 									}
