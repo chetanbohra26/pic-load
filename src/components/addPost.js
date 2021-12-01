@@ -23,7 +23,11 @@ class AddPost extends React.Component {
 		const redirectString = toReturn
 			? `${ROUTES.LOGIN}?redirect=${ROUTES.ADDPOST}`
 			: ROUTES.LOGIN;
-		this.props.history.replace(redirectString);
+		this.props.history?.replace(redirectString);
+	};
+
+	redirectToHome = () => {
+		console.log(this.props.history?.push(ROUTES.HOME));
 	};
 
 	componentDidUpdate() {
@@ -62,10 +66,10 @@ class AddPost extends React.Component {
 		const post = this.state.post;
 		return (
 			<div className="row m-0 p-4 justify-content-center">
-				<div className=" card col col-sm-12 col-md-9 col-lg-6 m-0 p-0">
-					<div className="card-header text-center">
+				<div className="card col col-sm-12 col-md-9 col-lg-6 p-0">
+					<h5 className="card-header text-center fw-bolder">
 						Add a new Post
-					</div>
+					</h5>
 					<div className="card-body d-flex flex-grow-1 flex-shrink-1 flex-column p-3">
 						<form onSubmit={this.createPost}>
 							<div className="mb-3">
@@ -75,7 +79,7 @@ class AddPost extends React.Component {
 								>
 									Post title
 								</label>
-								<input
+								<textarea
 									type="text"
 									id="post-title"
 									name="title"
@@ -105,13 +109,24 @@ class AddPost extends React.Component {
 								/>
 							</div>
 							<div className="d-flex justify-content-center mb-3">
-								<button className="btn btn-primary">
+								<button
+									className="btn btn-primary fw-bolder"
+									style={{ minWidth: "6rem" }}
+									title="Create post"
+								>
 									Post
 								</button>
 							</div>
 						</form>
-						<div className="mx-auto">
-							<button className="btn btn-danger">Cancel</button>
+						<div className="d-flex justify-content-center">
+							<button
+								className="btn btn-danger fw-bolder"
+								style={{ minWidth: "6rem" }}
+								onClick={this.redirectToHome}
+								title="Return to home"
+							>
+								Cancel
+							</button>
 						</div>
 					</div>
 				</div>

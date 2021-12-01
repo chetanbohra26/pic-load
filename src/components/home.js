@@ -19,7 +19,7 @@ class Home extends React.Component {
 				{this.getUserGreeting()}
 				{this.props.user && this.props.user?.id && (
 					<button
-						className="btn btn-primary rounded-circle btn-lg position-fixed bottom-0 end-0 m-4"
+						className="btn btn-primary rounded-pill btn-lg position-fixed bottom-0 end-0 m-4 fw-bolder border border-2 border-dark"
 						onClick={() => this.handleAddPost()}
 						title="Add a new post"
 					>
