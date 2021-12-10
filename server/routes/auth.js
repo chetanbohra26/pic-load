@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { User } = require("../model/user");
+const { User } = require("../models/user");
 const { hashPassword, verifyPassword } = require("../util/hash");
 const { createToken } = require("../util/token");
 

@@ -6,6 +6,7 @@ class AddPost extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			postBtnDisabled: false,
 			post: {
 				title: "",
 				postImage: "",
@@ -47,6 +48,7 @@ class AddPost extends React.Component {
 
 	createPost = (e) => {
 		e.preventDefault();
+		this.setState({ postBtnDisabled: true });
 		const { title, postImage } = this.state.post;
 		const data = new FormData();
 		data.append("title", title);
@@ -56,10 +58,14 @@ class AddPost extends React.Component {
 			.post("http://localhost:7500/api/post/createPost", data, {
 				headers: {
 					"Content-Type": "multipart/form-data",
+					token: this.props.user.token,
 				},
 			})
-			.then(() => console.log("done"))
-			.catch((err) => console.log(err));
+			.then((res) => console.log("done", res?.data))
+			.catch((err) => console.log(err))
+			.then(() => {
+				this.setState({ postBtnDisabled: false });
+			});
 	};
 
 	render() {
@@ -113,6 +119,7 @@ class AddPost extends React.Component {
 									className="btn btn-primary fw-bolder"
 									style={{ minWidth: "6rem" }}
 									title="Create post"
+									disabled={this.state.postBtnDisabled}
 								>
 									Post
 								</button>

@@ -14,9 +14,9 @@ const postSchema = new mongoose.Schema({
 		required: true,
 		default: Date.now,
 	},
-	caption: {
+	title: {
 		type: String,
-		required: false,
+		required: true,
 	},
 });
 

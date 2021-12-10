@@ -1,34 +1,66 @@
 const express = require("express");
-const upload = require("../middleware/upload");
 const multer = require("multer");
 const cors = require("cors");
+const fs = require("fs");
+
+const { uploadUtil } = require("../middleware/uploadPost");
+const { verifyUser } = require("../middleware/verifyUser");
+const { Post } = require("../models/post");
+const { postSchema } = require("../validations/post");
 
 const router = express.Router();
 router.options("*", cors());
-router.post("/createPost", (req, res) => {
+router.post("/createPost", verifyUser, async (req, res) => {
 	console.log("file req receved");
-	upload(req, res, (err) => {
-		if (err) console.log(err);
-		if (err instanceof multer.MulterError) {
-			if (err.code === "LIMIT_FILE_SIZE")
-				return res.status(400).json({
-					success: false,
-					error: err.message,
-					code: err.code,
-				});
+
+	try {
+		await uploadUtil(req, res);
+
+		const file = req.file;
+		if (!file) {
 			return res.status(400).json({
 				success: false,
-				error: "Invalid file",
-			});
-		} else if (err) {
-			return res.status(500).json({
-				success: false,
-				message: "Internal Server Error",
-				err,
+				message: "File not found",
 			});
 		}
-		res.send({ file: req.file, data: req.body });
-	});
+
+		const data = {
+			userId: req.user.id,
+			title: req.body.title,
+			postImage: req.file.filename,
+		};
+
+		const { error, value } = postSchema.validate(data);
+		if (error) {
+			req.file &&
+				fs.unlink(req.file.path, (err) => {
+					if (err) throw err;
+					console.log("file deleted", req.file.path);
+				});
+			console.log();
+			return res.status(400).json({
+				success: false,
+				message: error.details[0].message,
+			});
+		}
+
+		const post = new Post({
+			...value,
+			postImage: req.file.filename,
+		});
+
+		await post.save();
+
+		return res.status(201).json({
+			success: true,
+			message: "File uploaded successfully",
+		});
+	} catch (err) {
+		res.status(err.status || 500).json({
+			success: false,
+			message: err.message,
+		});
+	}
 });
 
 module.exports = router;
