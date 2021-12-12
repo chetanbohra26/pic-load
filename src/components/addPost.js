@@ -1,6 +1,8 @@
 import React from "react";
-import axios from "axios";
+
 import ROUTES from "../config/routeConfig.json";
+import { toast } from "react-toastify";
+import { addPostRequest } from "../util/apiHelper";
 
 class AddPost extends React.Component {
 	constructor(props) {
@@ -46,26 +48,23 @@ class AddPost extends React.Component {
 		this.setState({ post });
 	};
 
-	createPost = (e) => {
+	createPost = async (e) => {
 		e.preventDefault();
 		this.setState({ postBtnDisabled: true });
 		const { title, postImage } = this.state.post;
-		const data = new FormData();
-		data.append("title", title);
-		data.append("postImage", postImage);
+		const formData = new FormData();
+		formData.append("title", title);
+		formData.append("postImage", postImage);
 
-		axios
-			.post("http://localhost:7500/api/post/createPost", data, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-					token: this.props.user.token,
-				},
-			})
-			.then((res) => console.log("done", res?.data))
-			.catch((err) => console.log(err))
-			.then(() => {
-				this.setState({ postBtnDisabled: false });
-			});
+		const data = await addPostRequest(formData, this.props.user?.token);
+		console.log(data);
+		if (data.success && data.message) {
+			toast.success(data.message);
+			this.redirectToHome();
+		} else if (data.message) {
+			toast.error(data.message);
+		}
+		this.setState({ postBtnDisabled: false });
 	};
 
 	render() {

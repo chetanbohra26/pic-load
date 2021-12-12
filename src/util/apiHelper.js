@@ -1,16 +1,9 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_API_URL || "/api";
+const API_URL = process.env.REACT_APP_URL || "";
 
 const errorHandler = ({ response }) => {
 	if (response && response.data) {
-		if (response.status === 400) {
-			console.log(response.data.message);
-			return {
-				success: false,
-				message: "Invalid form data",
-			};
-		}
 		return response.data;
 	} else {
 		return {
@@ -20,21 +13,15 @@ const errorHandler = ({ response }) => {
 	}
 };
 
-export const loginRequest = async (email, pass) => {
-	const loginUrl = `${API_URL}/auth/login`;
+export const requestHandler = async (req) => {
+	const url = `${API_URL}/api${req.url}`;
 	try {
 		const res = await axios({
-			method: "POST",
-			url: loginUrl,
-			data: {
-				email,
-				pass,
-			},
+			url,
+			method: req.method,
+			headers: req.headers,
+			data: req.data,
 		});
-
-		if (!res.data.token && !res.data.success) {
-			return errorHandler();
-		}
 
 		return res.data;
 	} catch (err) {
@@ -42,24 +29,47 @@ export const loginRequest = async (email, pass) => {
 	}
 };
 
+export const loginRequest = async (email, pass) => {
+	const res = await requestHandler({
+		method: "POST",
+		url: "/auth/login",
+		data: {
+			email,
+			pass,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
 export const registerRequest = async (name, email, pass, pass2) => {
-	const registerUrl = `${API_URL}/auth/register`;
-	try {
-		const res = await axios({
-			method: "POST",
-			url: registerUrl,
-			data: {
-				name,
-				email,
-				pass,
-				pass2,
-			},
-		});
-		if (!res.data.token && !res.data.success) {
-			return errorHandler();
-		}
-		return res.data;
-	} catch (err) {
-		return errorHandler(err);
-	}
+	const res = await requestHandler({
+		method: "POST",
+		url: "/auth/register",
+		data: {
+			name,
+			email,
+			pass,
+			pass2,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
+export const addPostRequest = async (data, token) => {
+	const res = await requestHandler({
+		method: "POST",
+		url: "/post/createPost",
+		headers: {
+			"Content-Type": "multipart/form-data",
+			token,
+		},
+		data,
+	});
+
+	console.log(res);
+	return res;
 };
