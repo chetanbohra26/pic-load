@@ -42,7 +42,7 @@ class Home extends React.Component {
 	render() {
 		return (
 			<div className="d-flex flex-column flex-grow-1 flex-shrink-1">
-				<div class="d-flex flex-column mt-4">
+				<div className="d-flex flex-column mt-4">
 					{this.state.posts.map((post) => (
 						<Post key={post._id} post={post} />
 					))}
