@@ -7,6 +7,7 @@ const { uploadUtil } = require("../middleware/uploadPost");
 const { verifyUser } = require("../middleware/verifyUser");
 const { Post } = require("../models/post");
 const { postSchema } = require("../validations/post");
+const { getPosts } = require("../util/post");
 
 const router = express.Router();
 router.options("*", cors());
@@ -61,6 +62,21 @@ router.post("/createPost", verifyUser, async (req, res) => {
 			message: err.message,
 		});
 	}
+});
+
+router.get("/fetchPost", async (req, res) => {
+	const posts = await getPosts();
+	if (!posts) {
+		return res.status(500).json({
+			success: false,
+			message: "Could not fetch posts",
+		});
+	}
+	res.status(200).json({
+		success: true,
+		posts,
+		total: posts.length,
+	});
 });
 
 module.exports = router;
