@@ -1,5 +1,4 @@
 const express = require("express");
-const multer = require("multer");
 const cors = require("cors");
 const fs = require("fs");
 
@@ -8,21 +7,37 @@ const { verifyUser } = require("../middleware/verifyUser");
 const { Post } = require("../models/post");
 const { postSchema } = require("../validations/post");
 const { getPosts } = require("../util/post");
+const { PicLoadError } = require("../error/PicLoadError");
 
 const router = express.Router();
-router.options("*", cors());
-router.post("/createPost", verifyUser, async (req, res) => {
-	console.log("file req receved");
 
+router.get("/fetchPost", async (req, res) => {
+	try {
+		const posts = await getPosts();
+		if (!posts) {
+			throw new PicLoadError("Could not fetch posts", 500);
+		}
+		res.status(200).json({
+			success: true,
+			posts,
+			total: posts.length,
+		});
+	} catch (err) {
+		return res.status(err.status || 500).json({
+			success: err.success || false,
+			message: "Could not fetch posts",
+		});
+	}
+});
+
+router.options("*", cors()); //TODO: test if required in PROD
+router.post("/createPost", verifyUser, async (req, res) => {
 	try {
 		await uploadUtil(req, res);
 
 		const file = req.file;
 		if (!file) {
-			return res.status(400).json({
-				success: false,
-				message: "File not found",
-			});
+			throw new PicLoadError("File not found", 400);
 		}
 
 		const data = {
@@ -35,14 +50,14 @@ router.post("/createPost", verifyUser, async (req, res) => {
 		if (error) {
 			req.file &&
 				fs.unlink(req.file.path, (err) => {
-					if (err) throw err;
-					console.log("file deleted", req.file.path);
+					if (err) {
+						console.error(
+							"File deletion failed after invalid Post field(s)",
+							err.message
+						);
+					}
 				});
-			console.log();
-			return res.status(400).json({
-				success: false,
-				message: error.details[0].message,
-			});
+			throw error;
 		}
 
 		const post = new Post({
@@ -59,24 +74,9 @@ router.post("/createPost", verifyUser, async (req, res) => {
 	} catch (err) {
 		res.status(err.status || 500).json({
 			success: false,
-			message: err.message,
+			message: err.message || "An error while creating post",
 		});
 	}
-});
-
-router.get("/fetchPost", async (req, res) => {
-	const posts = await getPosts();
-	if (!posts) {
-		return res.status(500).json({
-			success: false,
-			message: "Could not fetch posts",
-		});
-	}
-	res.status(200).json({
-		success: true,
-		posts,
-		total: posts.length,
-	});
 });
 
 module.exports = router;

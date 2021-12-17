@@ -1,21 +1,23 @@
 const { verifyToken } = require("../util/token");
+const { PicLoadError } = require("../error/PicLoadError");
 
 const verifyUser = (req, res, next) => {
-	const token = req.headers.token;
-	if (!token)
-		return res.status(401).json({
+	try {
+		const token = req.headers.token;
+		if (!token)
+			throw new PicLoadError("Token missing from request header", 400);
+
+		const user = verifyToken(token);
+		if (!user) throw new PicLoadError("Invalid token", 400);
+
+		req.user = user;
+		next();
+	} catch (err) {
+		return res.status(err.status || 500).json({
 			success: false,
-			message: "Token missing from request header",
-		});
-	const user = verifyToken(token);
-	if (!user) {
-		return res.status(401).json({
-			success: false,
-			message: "Invalid token",
+			message: err.message,
 		});
 	}
-	req.user = user;
-	next();
 };
 
 module.exports.verifyUser = verifyUser;
