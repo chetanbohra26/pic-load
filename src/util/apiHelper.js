@@ -70,6 +70,18 @@ export const addPostRequest = async (data, token) => {
 		data,
 	});
 
-	console.log(res);
+	//console.log(res);
 	return res;
 };
+
+export const fetchPostRequest = async () => {
+	const res = await requestHandler({
+		method: "GET",
+		url: "/post/fetchPost",
+	});
+
+	//console.log(res);
+	return res;
+};
+
+export const getUploadUrl = (postImage) => `${API_URL}/uploads/${postImage}`;

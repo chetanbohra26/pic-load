@@ -27,36 +27,38 @@ class App extends React.Component {
 					user={this.props.user}
 					onRemoveUser={this.props.removeUser}
 				/>
-				<Switch>
-					<Route
-						path={ROUTES.LOGIN}
-						render={(props) => (
-							<Login
-								{...props}
-								user={this.props.user}
-								onSetUser={this.props.setUser}
-							/>
-						)}
-					/>
-					<Route
-						path={ROUTES.ADDPOST}
-						render={(props) => (
-							<AddPost {...props} user={this.props.user} />
-						)}
-					/>
-					<Route
-						exact
-						path={ROUTES.HOME}
-						render={(props) => (
-							<Home
-								{...props}
-								user={this.props.user}
-								onSetUser={this.props.setUser}
-							/>
-						)}
-					/>
-					<Redirect path="*" to={ROUTES.HOME} />
-				</Switch>
+				<div className="d-flex flex-column flex-fill pt-4 mt-4">
+					<Switch>
+						<Route
+							path={ROUTES.LOGIN}
+							render={(props) => (
+								<Login
+									{...props}
+									user={this.props.user}
+									onSetUser={this.props.setUser}
+								/>
+							)}
+						/>
+						<Route
+							path={ROUTES.ADDPOST}
+							render={(props) => (
+								<AddPost {...props} user={this.props.user} />
+							)}
+						/>
+						<Route
+							exact
+							path={ROUTES.HOME}
+							render={(props) => (
+								<Home
+									{...props}
+									user={this.props.user}
+									onSetUser={this.props.setUser}
+								/>
+							)}
+						/>
+						<Redirect path="*" to={ROUTES.HOME} />
+					</Switch>
+				</div>
 			</div>
 		);
 	}

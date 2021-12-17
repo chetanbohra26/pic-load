@@ -73,7 +73,7 @@ class AddPost extends React.Component {
 					<h5 className="card-header text-center fw-bolder">
 						Add a new Post
 					</h5>
-					<div className="card-body d-flex flex-grow-1 flex-shrink-1 flex-column p-3">
+					<div className="card-body d-flex flex-column p-3">
 						<form onSubmit={this.createPost}>
 							<div className="mb-3">
 								<label
