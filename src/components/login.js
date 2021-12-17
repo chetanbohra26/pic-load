@@ -222,7 +222,7 @@ class Login extends React.Component {
 	render() {
 		return (
 			<div className="row m-0 p-4 justify-content-center">
-				<div className="card col col-sm-12 col-md-9 col-lg-6 mx-auto p-0">
+				<div className="card col col-sm-12 col-md-9 col-lg-6 mx-auto p-0 shadow">
 					<div className="card-header p-0 d-flex">
 						<ul className="nav nav-fill w-100">
 							<li className="nav-item flex-fill">

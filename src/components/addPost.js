@@ -44,7 +44,6 @@ class AddPost extends React.Component {
 
 	handleImageChange = ({ target }) => {
 		const post = { ...this.state.post, postImage: target.files[0] };
-		console.log(target.files[0]);
 		this.setState({ post });
 	};
 
@@ -57,7 +56,6 @@ class AddPost extends React.Component {
 		formData.append("postImage", postImage);
 
 		const data = await addPostRequest(formData, this.props.user?.token);
-		console.log(data);
 		if (data.success && data.message) {
 			toast.success(data.message);
 			this.redirectToHome();
@@ -71,7 +69,7 @@ class AddPost extends React.Component {
 		const post = this.state.post;
 		return (
 			<div className="row m-0 p-4 justify-content-center">
-				<div className="card col col-sm-12 col-md-9 col-lg-6 p-0">
+				<div className="card col col-sm-12 col-md-9 col-lg-6 p-0 shadow">
 					<h5 className="card-header text-center fw-bolder">
 						Add a new Post
 					</h5>

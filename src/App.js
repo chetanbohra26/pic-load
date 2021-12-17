@@ -21,10 +21,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div
-				className="d-flex bg-gradient flex-column"
-				style={{ height: "100vh" }}
-			>
+			<div className="d-flex bg-gradient flex-column vh-100">
 				<ToastContainer />
 				<Navbar
 					user={this.props.user}

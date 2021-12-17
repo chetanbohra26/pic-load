@@ -19,7 +19,7 @@ function Navbar(props) {
 				<span className="navbar-brand mb-0 h1">
 					<Link
 						to={ROUTES.HOME}
-						style={{ textDecoration: "none", color: "white" }}
+						className="text-decoration-none text-white"
 						title="Home"
 					>
 						Pic Load
