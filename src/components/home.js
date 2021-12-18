@@ -21,7 +21,11 @@ class Home extends React.Component {
 			...post,
 			postImage: getUploadUrl(post.postImage),
 		}));
-		if (posts) this.setState({ posts });
+		if (posts) {
+			this.setState({ posts });
+		} else {
+			toast.error("Could not fetch posts.");
+		}
 		this.setState({ initialFetch: true });
 	}
 
@@ -46,7 +50,7 @@ class Home extends React.Component {
 						{this.state.initialFetch ? (
 							<>
 								<span className="fs-4 text-secondary">
-									No posts found. Try refreshing the page.
+									No posts found.
 								</span>
 								<button
 									className="btn btn-dark d-inline-block"
