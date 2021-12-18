@@ -4,11 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 The project is using the following technologies:
 
 1. React + Redux
-
 2. Nodejs
-
 3. MongoDB
-
 4. Bootstrap
 
 ## Available Scripts
