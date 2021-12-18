@@ -25,23 +25,55 @@ function Navbar(props) {
 					</Link>
 				</span>
 
-				{props.user && props.user.id ? (
-					<button
-						className="btn btn-outline-danger"
-						onClick={handleLogoutClick}
-						title="Logout"
-					>
-						Logout
-					</button>
-				) : (
-					<button
-						className="btn btn-outline-light"
-						onClick={handleLoginClick}
-						title="Login"
-					>
-						Login
-					</button>
-				)}
+				<div className="d-flex flex-row">
+					{props.user && props.user.id ? (
+						<>
+							<li className="nav-item dropdown">
+								<span
+									className="btn dropdown-toggle text-white"
+									id="navbarDropdown"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									{props?.user?.name}
+								</span>
+								<ul
+									className="dropdown-menu"
+									aria-labelledby="navbarDropdown"
+								>
+									{/*
+									<li>
+										<button className="dropdown-item">
+											Profile
+										</button>
+									</li>
+									<li>
+										<hr className="dropdown-divider" />
+									</li>
+										*/}
+									<li>
+										<button
+											className="btn btn-link dropdown-item text-danger"
+											onClick={handleLogoutClick}
+										>
+											Logout
+										</button>
+									</li>
+								</ul>
+							</li>
+						</>
+					) : (
+						<li className="nav-item">
+							<button
+								className="btn btn-outline-light"
+								onClick={handleLoginClick}
+								title="Login"
+							>
+								Login
+							</button>
+						</li>
+					)}
+				</div>
 			</div>
 		</nav>
 	);

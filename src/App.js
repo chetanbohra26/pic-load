@@ -27,7 +27,11 @@ class App extends React.Component {
 					user={this.props.user}
 					onRemoveUser={this.props.removeUser}
 				/>
-				<div className="d-flex flex-column flex-fill pt-4 mt-4">
+
+				{/* Padding to prevent overlapping of navbar and content*/}
+				<div className="p-4"></div>
+
+				<div className="d-flex flex-column flex-fill">
 					<Switch>
 						<Route
 							path={ROUTES.LOGIN}
