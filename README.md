@@ -4,11 +4,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 The project is using the following technologies:
 
 1. React + Redux
-
 2. Nodejs
-
 3. MongoDB
-
 4. Bootstrap
 
 ## Available Scripts
@@ -32,6 +29,8 @@ The API requests can be made on [http://localhost:7500](http://localhost:7500) t
 
 Runs the Node server in watch mode using nodemon
 The API requests can be made on [http://localhost:7500](http://localhost:7500) through any REST client.
+
+The Node server will restart if you make any edits.
 
 ### `yarn test`
 
