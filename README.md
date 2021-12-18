@@ -1,18 +1,37 @@
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The project is using the following technologies:
+
+1. React + Redux
+
+2. Nodejs
+
+3. MongoDB
+
+4. Bootstrap
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn serve`
 
-Runs the app in the development mode.\
+Runs the React app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+### `yarn start`
+
+Runs the Node server
+The API requests can be made on [http://localhost:7500](http://localhost:7500) through any REST client.
+
+### `yarn start-watch`
+
+Runs the Node server in watch mode using nodemon
+The API requests can be made on [http://localhost:7500](http://localhost:7500) through any REST client.
 
 ### `yarn test`
 
