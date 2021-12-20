@@ -30,16 +30,22 @@ function Navbar(props) {
 					{props.user && props.user.id ? (
 						<li className="nav-item dropdown">
 							<span
-								className="btn dropdown-toggle text-white"
+								className="btn p-0 me-2 text-white dropdown-toggle d-inline-flex align-items-center"
 								id="navbarDropdown"
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
-								{props?.user?.name}
+								<text
+									className="d-inline-block text-white text-truncate"
+									style={{ maxWidth: "40vw" }}
+								>
+									{props?.user?.name}
+								</text>
 							</span>
 							<ul
-								className="dropdown-menu"
+								className="dropdown-menu end-0"
 								aria-labelledby="navbarDropdown"
+								style={{ left: "auto" }}
 							>
 								{/*
 									<li>
@@ -77,6 +83,7 @@ function Navbar(props) {
 						title="Chetan Bohra"
 						target="_blank"
 						rel="noreferrer"
+						className="d-none d-sm-inline"
 					>
 						<Github size={32} color="white" />
 					</a>
