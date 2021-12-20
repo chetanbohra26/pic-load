@@ -228,18 +228,17 @@ class Login extends React.Component {
 							<li className="nav-item flex-fill">
 								<button
 									className="nav-link p-3 border-0 bg-white text-black fw-bolder fs-5"
-									onClick={() =>
-										this.setState({ isLogin: true })
-									}
 									style={
 										!this.state.isLogin
 											? {
 													backgroundColor: "gray",
 													boxShadow:
 														"0 0 1rem 0.02rem inset rgb(202, 202, 202)",
-													color: "red",
 											  }
 											: {}
+									}
+									onClick={() =>
+										this.setState({ isLogin: true })
 									}
 								>
 									Login
