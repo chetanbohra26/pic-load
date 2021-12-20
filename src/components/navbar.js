@@ -35,12 +35,13 @@ function Navbar(props) {
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
-								<text
+								<span
 									className="d-inline-block text-white text-truncate"
 									style={{ maxWidth: "40vw" }}
+									title={props?.user?.name}
 								>
 									{props?.user?.name}
-								</text>
+								</span>
 							</span>
 							<ul
 								className="dropdown-menu end-0"
