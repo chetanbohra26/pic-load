@@ -1,5 +1,7 @@
 import React from "react";
 import moment from "moment";
+import { PersonCircle } from "react-bootstrap-icons";
+
 function Post({ post }) {
 	console.log(post);
 	const ago = moment(post.createdAt).fromNow();
@@ -8,7 +10,7 @@ function Post({ post }) {
 		<div className="card mb-4 border d-flex flex-column shadow">
 			<div className="card-header p-2">
 				<div className="d-flex flex-row align-items-center">
-					<div className="p-4 me-2 rounded-circle bg-dark" />
+					<PersonCircle size={32} className="me-2" />
 					<h3 className="p-0 m-0">{post.author}</h3>
 				</div>
 
