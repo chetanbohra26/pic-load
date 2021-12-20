@@ -17,6 +17,12 @@ class Login extends React.Component {
 		};
 	}
 
+	componentDidMount() {
+		if (this.props?.user?.id) {
+			this.props?.history?.replace(ROUTES.HOME);
+		}
+	}
+
 	handleLoginChange = ({ currentTarget: input }) => {
 		const login = { ...this.state.login };
 		login[input.name] = input.value;
