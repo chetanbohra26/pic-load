@@ -3,11 +3,17 @@ const mongoose = require("mongoose");
 const validateUserSchema = new mongoose.Schema({
 	userId: {
 		type: mongoose.Types.ObjectId,
+		unique: true,
 		required: true,
 	},
-	secret: {
+	otp: {
 		type: String,
 		required: true,
+	},
+	timestamp: {
+		type: Date,
+		required: true,
+		default: Date.now,
 	},
 });
 

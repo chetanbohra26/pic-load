@@ -13,6 +13,7 @@ import { Redirect, Route, Switch } from "react-router";
 import Login from "./components/login";
 import Home from "./components/home";
 import AddPost from "./components/addPost";
+import VerifyUser from "./components/verifyUser";
 
 class App extends React.Component {
 	componentDidMount() {
@@ -58,6 +59,12 @@ class App extends React.Component {
 									user={this.props.user}
 									onSetUser={this.props.setUser}
 								/>
+							)}
+						/>
+						<Route
+							path={ROUTES.VERIFYUSER}
+							render={(props) => (
+								<VerifyUser user={this.props.user} />
 							)}
 						/>
 						<Redirect path="*" to={ROUTES.HOME} />
