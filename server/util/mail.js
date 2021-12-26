@@ -26,23 +26,10 @@ const sendMail = async (to, subject, body) => {
 		};
 	} catch (err) {
 		console.error(err);
-		console.error({ ...err });
 		return {
 			status: "ERROR",
 		};
 	}
 };
 
-const sendOtp = async (to) => {
-	const otp = Math.floor(100000 + Math.random() * 900000);
-	const { status } = await sendMail(
-		to,
-		"PicLoad - Confirm user email",
-		"OTP: " + otp
-	);
-
-	if (status && status === "OK") return otp;
-};
-
 module.exports.sendMail = sendMail;
-module.exports.sendOtp = sendOtp;
