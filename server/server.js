@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
 const path = require("path");
 
+const { dbInit } = require("./db");
 const apiRouter = require("./routes/api");
 
 const app = express();
@@ -16,10 +16,7 @@ if (environment === "development") {
 	app.use(cors()); //allowing cross origin requests for dev
 }
 
-mongoose.connect(process.env.MONGODB_URL, (err) => {
-	if (err) throw err;
-	console.log("Connected to mongodb");
-});
+dbInit();
 
 app.use(express.json());
 
