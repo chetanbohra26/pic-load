@@ -1,8 +1,6 @@
 const nodemailer = require("nodemailer");
 
 const sendMail = async (to, subject, body) => {
-	console.log("Mail email:", process.env.VERIFY_MAIL_EMAIL);
-	console.log("Mail pass:", process.env.VERIFY_MAIL_PASS);
 	try {
 		const transport = nodemailer.createTransport({
 			service: process.env.VERIFY_MAIL_SERVICE,
@@ -18,7 +16,6 @@ const sendMail = async (to, subject, body) => {
 			subject,
 			text: body,
 		});
-
 		console.log(res);
 		return {
 			status: "OK",
