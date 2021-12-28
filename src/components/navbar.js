@@ -1,4 +1,4 @@
-import { Github } from "react-bootstrap-icons";
+import { Github, ImageFill } from "react-bootstrap-icons";
 import { withRouter, Link } from "react-router-dom";
 import ROUTES from "../config/routeConfig.json";
 import { removeToken } from "../util/token";
@@ -22,6 +22,7 @@ function Navbar(props) {
 						className="text-decoration-none text-white"
 						title="Home"
 					>
+						<ImageFill className="me-2" />
 						Pic Load
 					</Link>
 				</span>
