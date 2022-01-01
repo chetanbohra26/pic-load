@@ -17,9 +17,10 @@ class AddPost extends React.Component {
 	}
 
 	componentDidMount() {
-		if (!this.props.user?.id) {
-			this.redirectToLogin(true);
-		}
+		if (!this.props.user?.id) this.redirectToLogin(true);
+
+		if (!this.props.user?.isVerified)
+			this.props.history?.replace(ROUTES.VERIFYUSER);
 	}
 
 	redirectToLogin = (toReturn = false) => {
@@ -56,7 +57,7 @@ class AddPost extends React.Component {
 		formData.append("postImage", postImage);
 
 		const data = await addPostRequest(formData, this.props.user?.token);
-		if (data.success && data.message) {
+		if (data.success) {
 			toast.success(data.message);
 			this.redirectToHome();
 		} else if (data.message) {

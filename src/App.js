@@ -13,6 +13,7 @@ import { Redirect, Route, Switch } from "react-router";
 import Login from "./components/login";
 import Home from "./components/home";
 import AddPost from "./components/addPost";
+import VerifyUser from "./components/verifyUser";
 
 class App extends React.Component {
 	componentDidMount() {
@@ -22,7 +23,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="d-flex bg-gradient flex-column vh-100">
-				<ToastContainer />
+				<ToastContainer theme="dark" />
 				<Navbar
 					user={this.props.user}
 					onRemoveUser={this.props.removeUser}
@@ -54,6 +55,16 @@ class App extends React.Component {
 							path={ROUTES.HOME}
 							render={(props) => (
 								<Home
+									{...props}
+									user={this.props.user}
+									onSetUser={this.props.setUser}
+								/>
+							)}
+						/>
+						<Route
+							path={ROUTES.VERIFYUSER}
+							render={(props) => (
+								<VerifyUser
 									{...props}
 									user={this.props.user}
 									onSetUser={this.props.setUser}

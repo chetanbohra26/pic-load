@@ -8,13 +8,13 @@ const verifyUser = (req, res, next) => {
 			throw new PicLoadError("Token missing from request header", 400);
 
 		const user = verifyToken(token);
-		if (!user) throw new PicLoadError("Invalid token", 400);
+		if (!user) throw new PicLoadError("Invalid token", 401);
 
 		req.user = user;
 		next();
 	} catch (err) {
 		return res.status(err.status || 500).json({
-			success: false,
+			success: err.success || false,
 			message: err.message,
 		});
 	}

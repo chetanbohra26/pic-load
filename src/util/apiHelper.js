@@ -84,4 +84,33 @@ export const fetchPostRequest = async () => {
 	return res;
 };
 
+export const sendOTPRequest = async (token) => {
+	const res = await requestHandler({
+		method: "GET",
+		url: "/user/createOTP",
+		headers: {
+			token,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
+export const verifyOTPRequest = async (token, otp) => {
+	const res = await requestHandler({
+		method: "POST",
+		url: "/user/verifyOTP",
+		headers: {
+			token,
+		},
+		data: {
+			otp,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
 export const getUploadUrl = (postImage) => `${API_URL}/uploads/${postImage}`;

@@ -30,7 +30,10 @@ class Home extends React.Component {
 	}
 
 	handleAddPost() {
-		if (this.props.user && this.props.user?.id) {
+		if (this.props?.user && this.props?.user?.id) {
+			if (!this.props?.user?.isVerified)
+				return toast.error("Need to verify email first");
+
 			this.props.history.replace("/addPost");
 		} else {
 			toast.error("User must be logged in to post");

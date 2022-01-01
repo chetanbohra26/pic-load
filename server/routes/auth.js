@@ -19,7 +19,12 @@ router.post("/login", async (req, res) => {
 		const result = await verifyPassword(user.pass, value.pass);
 		if (!result) throw new PicLoadError("Invalid email or password", 401);
 
-		const payload = { id: user._id, name: user.name, email: user.email };
+		const payload = {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+			isVerified: user.isVerified,
+		};
 		const token = createToken(payload);
 		if (!token) throw new PicLoadError("Could not issue token", 500);
 
@@ -46,7 +51,12 @@ router.post("/register", async (req, res) => {
 		});
 		await user.save();
 
-		const payload = { id: user._id, name: user.name, email: user.email };
+		const payload = {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+			isVerified: user.isVerified,
+		};
 		const token = createToken(payload);
 		if (!token) throw new PicLoadError("Could not issue token", 500);
 
