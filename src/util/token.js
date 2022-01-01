@@ -19,11 +19,18 @@ export const removeToken = () => {
 };
 
 export const fetchTokenAndData = () => {
-	const token = fetchToken();
-	if (!token) return;
+	try {
+		const token = fetchToken();
+		if (!token) return;
 
-	const payload = jwt.decode(token);
-	payload["token"] = token;
-
-	return payload;
+		const payload = jwt.decode(token);
+		payload["token"] = token;
+		return payload;
+	} catch (err) {
+		console.error("Error while initializing token.");
+		if (err.name === "TypeError") {
+			console.log("Error when verifying token");
+			removeToken();
+		}
+	}
 };

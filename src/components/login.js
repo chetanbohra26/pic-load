@@ -19,7 +19,7 @@ class Login extends React.Component {
 
 	componentDidMount() {
 		if (this.props?.user?.id) {
-			this.props?.history?.replace(ROUTES.HOME);
+			this.props?.history?.replace(ROUTES.VERIFYUSER);
 		}
 	}
 
@@ -40,11 +40,13 @@ class Login extends React.Component {
 			id: data.id,
 			name: data.name,
 			email: data.email,
+			isVerified: data.isVerified,
 			token: data.token,
 		});
 
 		const query = this.props.location?.search;
-		const { redirect = ROUTES.HOME } = queryString.parse(query);
+		const { redirect = data.isVerified ? ROUTES.HOME : ROUTES.VERIFYUSER } =
+			queryString.parse(query);
 		this.props.history?.replace(redirect);
 	};
 

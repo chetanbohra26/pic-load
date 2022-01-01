@@ -2,6 +2,7 @@ const defaultUser = {
 	id: undefined,
 	name: "Guest",
 	email: undefined,
+	isVerified: false,
 	token: undefined,
 };
 
@@ -13,6 +14,7 @@ const userReducer = (state = { ...defaultUser }, action) => {
 				id: action.payload.id,
 				name: action.payload.name,
 				email: action.payload.email,
+				isVerified: action.payload.isVerified,
 				token: action.payload.token,
 			};
 			break;

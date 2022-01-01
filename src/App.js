@@ -23,7 +23,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="d-flex bg-gradient flex-column vh-100">
-				<ToastContainer />
+				<ToastContainer theme="dark" />
 				<Navbar
 					user={this.props.user}
 					onRemoveUser={this.props.removeUser}
@@ -64,7 +64,11 @@ class App extends React.Component {
 						<Route
 							path={ROUTES.VERIFYUSER}
 							render={(props) => (
-								<VerifyUser user={this.props.user} />
+								<VerifyUser
+									{...props}
+									user={this.props.user}
+									onSetUser={this.props.setUser}
+								/>
 							)}
 						/>
 						<Redirect path="*" to={ROUTES.HOME} />

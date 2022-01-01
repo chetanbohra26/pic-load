@@ -5,7 +5,11 @@ import { removeToken } from "../util/token";
 
 function Navbar(props) {
 	function handleLoginClick() {
-		props.history.push("/login");
+		props.history.push(ROUTES.LOGIN);
+	}
+
+	function handleVerifyClick() {
+		props.history.push(ROUTES.VERIFYUSER);
 	}
 
 	function handleLogoutClick() {
@@ -48,16 +52,21 @@ function Navbar(props) {
 								aria-labelledby="navbarDropdown"
 								style={{ left: "auto" }}
 							>
-								{/*
-									<li>
-										<button className="dropdown-item">
-											Profile
-										</button>
-									</li>
-									<li>
-										<hr className="dropdown-divider" />
-									</li>
-										*/}
+								{!props.user?.isVerified && (
+									<>
+										<li>
+											<button
+												className="dropdown-item"
+												onClick={handleVerifyClick}
+											>
+												Verify User
+											</button>
+										</li>
+										<li>
+											<hr className="dropdown-divider" />
+										</li>
+									</>
+								)}
 								<li>
 									<button
 										className="btn btn-link dropdown-item text-danger"

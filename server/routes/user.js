@@ -4,6 +4,7 @@ const { verifyUser } = require("../middleware/verifyUser");
 const { sendOtp } = require("../util/otp");
 const { ValidateUser } = require("../models/validateUser");
 const { User } = require("../models/user");
+const { createToken } = require("../util/token");
 
 const router = express.Router();
 
@@ -11,10 +12,11 @@ router.get("/createOTP", verifyUser, async (req, res) => {
 	try {
 		const email = req.user && req.user.email;
 		const userId = req.user && req.user.id;
-		if (!email) throw new PicLoadError("Could not verify User", 400, false);
+		if (!email)
+			throw new PicLoadError("Could not validate user details", 401);
 
 		const otp = await sendOtp(email);
-		if (!otp) throw new PicLoadError("Could not generate OTP", 500, false);
+		if (!otp) throw new PicLoadError("Could not generate OTP", 500);
 
 		let record = await ValidateUser.findOne({ userId });
 		if (!record) {
@@ -29,7 +31,7 @@ router.get("/createOTP", verifyUser, async (req, res) => {
 		await record.save();
 
 		res.json({
-			sucess: true,
+			success: true,
 			message: "Check mail for OTP",
 		});
 	} catch (err) {
@@ -44,24 +46,35 @@ router.post("/verifyOTP", verifyUser, async (req, res) => {
 	try {
 		const userId = req.user && req.user.id;
 		if (!userId)
-			throw new PicLoadError("Could not verify User", 400, false);
+			throw new PicLoadError("Could not validate user details", 401);
 		const otp = req.body.otp;
-		if (!otp) throw new PicLoadError("Missing OTP", 400, false);
+		if (!otp) throw new PicLoadError("Missing OTP", 400);
 
 		const record = await ValidateUser.findOne({ userId });
 		if (!record || record.otp !== otp) {
-			throw new PicLoadError("Incorrect OTP", 401, false);
+			throw new PicLoadError("Incorrect OTP", 401);
 		}
 
 		const user = await User.findById(userId);
-		if (!user) throw new PicLoadError("User no longer exists", 404, false);
+		if (!user) throw new PicLoadError("User no longer exists", 404);
 
 		user.isVerified = true;
 		await user.save();
+		await record.remove();
+
+		const payload = {
+			id: user._id,
+			name: user.name,
+			email: user.email,
+			isVerified: user.isVerified,
+		};
+
+		const token = createToken(payload);
 
 		res.json({
 			success: true,
 			message: "OTP Verified Successfully",
+			token,
 		});
 	} catch (err) {
 		console.error({ ...err });
