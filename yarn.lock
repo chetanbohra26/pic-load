@@ -8196,6 +8196,11 @@ node-releases@^1.1.61, node-releases@^1.1.70:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.70.tgz#66e0ed0273aa65666d7fe78febe7634875426a08"
   integrity sha512-Slf2s69+2/uAD79pVVQo8uSiC34+g8GWY8UH2Qtqv34ZfhYrxpYpfzs9Js9d6O0mbDmALuxaTlplnBTnSELcrw==
 
+nodemailer@^6.7.2:
+  version "6.7.2"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.7.2.tgz#44b2ad5f7ed71b7067f7a21c4fedabaec62b85e0"
+  integrity sha512-Dz7zVwlef4k5R71fdmxwR8Q39fiboGbu3xgswkzGwczUfjp873rVxt1O46+Fh0j1ORnAC6L9+heI8uUpO6DT7Q==
+
 nodemon@^2.0.15:
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-2.0.15.tgz#504516ce3b43d9dc9a955ccd9ec57550a31a8d4e"
@@ -9893,6 +9898,11 @@ react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
+
+react-otp-input@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-2.4.0.tgz#0f0a3de1d8c8d564e2e4fbe5d6b7b56e29e3a6e6"
+  integrity sha512-AIgl7u4sS9BTNCxX1xlaS5fPWay/Zml8Ho5LszXZKXrH1C/TiFsTQGmtl13UecQYO3mSF3HUzG2rrDf0sjEFmg==
 
 react-redux@^7.2.6:
   version "7.2.6"
