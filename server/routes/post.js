@@ -8,6 +8,7 @@ const { Post } = require("../models/post");
 const { postSchema } = require("../validations/post");
 const { getPosts } = require("../util/post");
 const { PicLoadError } = require("../error/PicLoadError");
+const { post } = require("../config");
 
 const router = express.Router();
 
@@ -77,6 +78,14 @@ router.post("/createPost", verifyUser, async (req, res) => {
 			message: err.message || "An error while creating post",
 		});
 	}
+});
+
+router.get("/postCategories", (req, res) => {
+	const categories = (post && post.categories) || [];
+	res.json({
+		success: true,
+		categories,
+	});
 });
 
 module.exports = router;

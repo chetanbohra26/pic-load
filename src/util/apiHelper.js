@@ -113,4 +113,14 @@ export const verifyOTPRequest = async (token, otp) => {
 	return res;
 };
 
+export const getPostCategoriesRequest = async () => {
+	const res = await requestHandler({
+		method: "GET",
+		url: "/post/postCategories",
+	});
+
+	//console.log(res);
+	return res;
+};
+
 export const getUploadUrl = (postImage) => `${API_URL}/uploads/${postImage}`;
