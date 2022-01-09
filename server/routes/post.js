@@ -14,7 +14,8 @@ const router = express.Router();
 
 router.get("/fetchPost", async (req, res) => {
 	try {
-		const posts = await getPosts();
+		const category = req.query.category || post.defaultCategory;
+		const posts = await getPosts(category);
 		if (!posts) {
 			throw new PicLoadError("Could not fetch posts", 500);
 		}
@@ -44,6 +45,7 @@ router.post("/createPost", verifyUser, async (req, res) => {
 		const data = {
 			userId: req.user.id,
 			title: req.body.title,
+			category: req.body.category,
 			postImage: req.file.filename,
 		};
 
@@ -74,7 +76,7 @@ router.post("/createPost", verifyUser, async (req, res) => {
 		});
 	} catch (err) {
 		res.status(err.status || 500).json({
-			success: false,
+			success: err.success || false,
 			message: err.message || "An error while creating post",
 		});
 	}

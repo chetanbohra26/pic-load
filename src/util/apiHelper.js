@@ -21,6 +21,7 @@ export const requestHandler = async (req) => {
 			method: req.method,
 			headers: req.headers,
 			data: req.data,
+			params: req.params,
 		});
 
 		return res.data;
@@ -74,10 +75,11 @@ export const addPostRequest = async (data, token) => {
 	return res;
 };
 
-export const fetchPostRequest = async () => {
+export const fetchPostRequest = async (category) => {
 	const res = await requestHandler({
 		method: "GET",
 		url: "/post/fetchPost",
+		params: { category },
 	});
 
 	//console.log(res);

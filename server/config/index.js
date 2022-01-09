@@ -6,11 +6,17 @@ const config = {
 	},
 	post: {
 		categories: [
-			{ key: "general", name: "General", order: 1 },
-			{ key: "anime", name: "Anime", order: 2 },
-			{ key: "wildlife", name: "Wild life", order: 3 },
-			{ key: "dankmemes", name: "Dank Memes", order: 4 },
+			{ id: "general", name: "General", order: 1 },
+			{ id: "anime", name: "Anime", order: 2 },
+			{ id: "wildlife", name: "Wildlife", order: 3 },
+			{ id: "dankmemes", name: "Dank Memes", order: 4 },
+			{
+				id: "photo",
+				name: "Travel & Photography",
+				order: 5,
+			},
 		],
+		defaultCategory: "general",
 	},
 };
 

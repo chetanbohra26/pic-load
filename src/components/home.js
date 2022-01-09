@@ -2,32 +2,59 @@ import React from "react";
 import { toast } from "react-toastify";
 
 import Post from "./post";
-import { fetchPostRequest, getUploadUrl } from "../util/apiHelper";
+import {
+	fetchPostRequest,
+	getPostCategoriesRequest,
+	getUploadUrl,
+} from "../util/apiHelper";
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			posts: [],
 			initialFetch: false,
+			categories: [],
+			activeCat: "",
 		};
 	}
 	componentDidMount() {
-		this.fetchPosts();
+		this.fetchCategories();
 	}
 
-	async fetchPosts() {
-		const data = await fetchPostRequest();
+	fetchCategories = async () => {
+		const data = await getPostCategoriesRequest();
+		const categories = data?.categories;
+		if (categories) {
+			this.setState({ categories, activeCat: categories[0]?.id });
+			this.fetchPosts(categories[0]?.id);
+		}
+	};
+
+	loadCat = (category) => {
+		if (category === this.state.activeCat) return;
+		this.setState({ activeCat: category });
+		this.fetchPosts(category);
+	};
+
+	setCategory = (category) => {
+		this.setState({ activeCat: category });
+		this.fetchPosts(category);
+	};
+
+	fetchPosts = async (category) => {
+		const data = await fetchPostRequest(category);
 		const posts = data?.posts?.map((post) => ({
 			...post,
 			postImage: getUploadUrl(post.postImage),
 		}));
 		if (posts) {
 			this.setState({ posts });
+			if (posts.length === 0) return toast.info("No posts found");
 		} else {
 			toast.error("Could not fetch posts.");
 		}
 		this.setState({ initialFetch: true });
-	}
+	};
 
 	handleAddPost() {
 		if (this.props?.user && this.props?.user?.id) {
@@ -41,15 +68,36 @@ class Home extends React.Component {
 	}
 	render() {
 		return (
-			<div className="d-flex flex-column flex-fill container">
+			<div className="d-flex flex-row flex-fill container-xl justify-content-center">
+				{this.state.categories.length > 0 && (
+					<div className="d-none d-lg-flex flex-column mt-4 me-2 ms-lg-2 col-2 absolute-top">
+						<ul className="list-group">
+							<li className="list-group-item p-3 mb-2 fw-bold fs-5 bg-dark text-light">
+								Categories
+							</li>
+							{this.state.categories.map((cat) => (
+								<button
+									className={`btn btn-light p-3 list-group-item mb-1 text-start ${
+										this.state.activeCat === cat.id &&
+										"fw-bold"
+									}`}
+									key={cat.id}
+									onClick={() => this.loadCat(cat.id)}
+								>
+									{cat.name}
+								</button>
+							))}
+						</ul>
+					</div>
+				)}
 				{this.state.posts.length > 0 ? (
-					<div className="d-flex flex-column mt-4 align-self-center col-sm-12 col-lg-9">
+					<div className="d-flex flex-column mt-4 col-sm-12 col-lg-10">
 						{this.state.posts.map((post) => (
 							<Post key={post._id} post={post} />
 						))}
 					</div>
 				) : (
-					<div className="d-flex flex-column flex-fill mx-auto justify-content-center">
+					<div className="d-flex flex-column mx-auto align-self-center">
 						{this.state.initialFetch ? (
 							<>
 								<span className="fs-4 text-secondary">
@@ -57,7 +105,9 @@ class Home extends React.Component {
 								</span>
 								<button
 									className="btn btn-dark d-inline-block"
-									onClick={() => this.fetchPosts()}
+									onClick={() => {
+										this.fetchPosts(this.state.activeCat);
+									}}
 								>
 									Retry
 								</button>
