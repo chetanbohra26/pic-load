@@ -1,9 +1,21 @@
 const express = require("express");
 
 const { User } = require("../models/user");
+const { ForgotPassUser } = require("../models/forgotPassUser");
 const { hashPassword, verifyPassword } = require("../util/hash");
-const { createToken } = require("../util/token");
-const { loginSchema, registerSchema } = require("./../validations/auth");
+const {
+	createToken,
+	createPassToken,
+	verifyPassToken,
+} = require("../util/token");
+const { sendOtp } = require("../util/otp");
+const {
+	loginSchema,
+	registerSchema,
+	createPassOTPSchema,
+	verifyPassOTPSchema,
+	updateForgotPassSchema,
+} = require("./../validations/auth");
 const { PicLoadError } = require("../error/PicLoadError");
 
 const router = express.Router();
@@ -73,6 +85,78 @@ router.post("/register", async (req, res) => {
 				message: err.message || "Error ocurred while registering user",
 			});
 		}
+	}
+});
+
+router.post("/createPasswordOTP", async (req, res) => {
+	try {
+		const { value, error } = createPassOTPSchema.validate(req.body);
+		if (error) throw error;
+
+		const email = value.email;
+		const user = await User.findOne({ email }, { email: 1 });
+		if (!user)
+			return res.json({
+				success: true,
+				message: "If email was registered, OTP has been sent",
+				devServerMsg: "NO-USER",
+			});
+
+		const otp = await sendOtp(email);
+
+		let record = await ForgotPassUser.findOne({ email });
+		if (!record) {
+			record = new ForgotPassUser({ email, otp });
+		} else {
+			(record.otp = otp), (record.timestamp = new Date());
+		}
+		await record.save();
+
+		res.json({
+			success: true,
+			message: "If email was registered, OTP has been sent",
+		});
+	} catch (err) {
+		res.status(err.status || 500).json({
+			success: err.success || false,
+			message: err.message || "Error ocurred while registering user",
+		});
+	}
+});
+
+router.post("/verifyPasswordOTP", async (req, res) => {
+	try {
+		const { error, value } = verifyPassOTPSchema.validate(req.body);
+		if (error) throw error;
+
+		const email = value.email;
+
+		const record = await ForgotPassUser.findOne({ email });
+		if (!record) throw new PicLoadError("Invalid OTP", 401);
+
+		const otpMatch = record.otp === value.otp;
+		if (!otpMatch) throw new PicLoadError("Invalid OTP", 401);
+
+		const hash = await hashPassword(value.newPass);
+		if (!hash) throw new PicLoadError("Could not update password", 500);
+
+		const user = await User.findOne({ email });
+		if (!user) throw new PicLoadError("User not found", 404);
+		user.pass = hash;
+
+		await user.save();
+		await record.remove();
+
+		res.json({
+			success: true,
+			message: "Password updated successfully",
+		});
+	} catch (err) {
+		console.error({ ...err });
+		res.status(err.status || 500).json({
+			success: err.success || false,
+			message: err.message || "Could not verify OTP",
+		});
 	}
 });
 

@@ -12,6 +12,10 @@ function Navbar(props) {
 		props.history.push(ROUTES.VERIFYUSER);
 	}
 
+	function handleForgotPassClick() {
+		props.history.push(ROUTES.FORGOTPASS);
+	}
+
 	function handleLogoutClick() {
 		removeToken();
 		props.onRemoveUser();
@@ -54,20 +58,26 @@ function Navbar(props) {
 								style={{ left: "auto" }}
 							>
 								{!props.user?.isVerified && (
-									<>
-										<li>
-											<button
-												className="dropdown-item"
-												onClick={handleVerifyClick}
-											>
-												Verify User
-											</button>
-										</li>
-										<li>
-											<hr className="dropdown-divider" />
-										</li>
-									</>
+									<li>
+										<button
+											className="dropdown-item"
+											onClick={handleVerifyClick}
+										>
+											Verify User
+										</button>
+									</li>
 								)}
+								<li>
+									<button
+										className="dropdown-item"
+										onClick={handleForgotPassClick}
+									>
+										Forgot Password
+									</button>
+								</li>
+								<li>
+									<hr className="dropdown-divider" />
+								</li>
 								<li>
 									<button
 										className="btn btn-link dropdown-item text-danger"

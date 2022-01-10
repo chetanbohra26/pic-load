@@ -27,6 +27,10 @@ class VerifyUser extends React.Component {
 		this.props.history?.replace(ROUTES.LOGIN);
 	};
 
+	redirectToHome = () => {
+		this.props.history?.replace(ROUTES.HOME);
+	};
+
 	componentDidMount() {
 		const isVerified = this.props?.user?.isVerified;
 		if (isVerified) {
@@ -92,8 +96,7 @@ class VerifyUser extends React.Component {
 						<div className="mb-3">
 							<label>User Email</label>
 							<label
-								name="title"
-								className="form-control"
+								className="form-control text-secondary"
 								title={this.props.user?.email}
 							>
 								{this.props.user?.email}
@@ -137,7 +140,7 @@ class VerifyUser extends React.Component {
 									to={ROUTES.HOME}
 									title="Continue using with guest access"
 								>
-									Skip with restricted functionality
+									Skip verification
 								</Link>
 							</>
 						)}

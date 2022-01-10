@@ -20,20 +20,14 @@ router.get("/createOTP", verifyUser, async (req, res) => {
 
 		let record = await ValidateUser.findOne({ userId });
 		if (!record) {
-			record = new ValidateUser({
-				userId,
-				otp,
-			});
+			record = new ValidateUser({ userId, otp });
 		} else {
 			record.otp = otp;
 			record.timestamp = new Date();
 		}
 		await record.save();
 
-		res.json({
-			success: true,
-			message: "Check mail for OTP",
-		});
+		res.json({ success: true, message: "Check mail for OTP" });
 	} catch (err) {
 		res.status(err.status || 500).json({
 			success: err.success || false,
@@ -48,7 +42,7 @@ router.post("/verifyOTP", verifyUser, async (req, res) => {
 		if (!userId)
 			throw new PicLoadError("Could not validate user details", 401);
 		const otp = req.body.otp;
-		if (!otp) throw new PicLoadError("Missing OTP", 400);
+		if (!otp) throw new PicLoadError("Missing OTP", 404);
 
 		const record = await ValidateUser.findOne({ userId });
 		if (!record || record.otp !== otp) {
