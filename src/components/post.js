@@ -7,7 +7,7 @@ function Post({ post }) {
 	const ago = moment(post.createdAt).fromNow();
 
 	return (
-		<div className="card mb-4 border d-flex flex-column shadow">
+		<div className="card mb-2 border d-flex flex-column shadow">
 			<div className="card-header p-2">
 				<div className="d-flex flex-row align-items-center">
 					{/*icon wrapped in div to avoid shrink for long author*/}

@@ -1,9 +1,19 @@
 const mongoose = require("mongoose");
+const { post } = require("../config");
 
 const postSchema = new mongoose.Schema({
 	userId: {
 		type: mongoose.Types.ObjectId,
 		required: true,
+	},
+	title: {
+		type: String,
+		required: true,
+	},
+	category: {
+		type: String,
+		required: true,
+		default: post.defaultCategory,
 	},
 	postImage: {
 		type: String,
@@ -13,10 +23,6 @@ const postSchema = new mongoose.Schema({
 		type: Date,
 		required: true,
 		default: Date.now,
-	},
-	title: {
-		type: String,
-		required: true,
 	},
 });
 

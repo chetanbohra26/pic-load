@@ -2,7 +2,7 @@ import React from "react";
 
 import ROUTES from "../config/routeConfig.json";
 import { toast } from "react-toastify";
-import { addPostRequest } from "../util/apiHelper";
+import { addPostRequest, getPostCategoriesRequest } from "../util/apiHelper";
 
 class AddPost extends React.Component {
 	constructor(props) {
@@ -12,7 +12,9 @@ class AddPost extends React.Component {
 			post: {
 				title: "",
 				postImage: "",
+				category: "",
 			},
+			categories: [],
 		};
 	}
 
@@ -23,6 +25,7 @@ class AddPost extends React.Component {
 			toast.error("Need to verify email first");
 			this.props.history?.replace(ROUTES.VERIFYUSER);
 		}
+		this.loadCategories();
 	}
 
 	redirectToLogin = (toReturn = false) => {
@@ -40,8 +43,19 @@ class AddPost extends React.Component {
 		if (!this.props.user?.id) this.redirectToLogin();
 	}
 
+	loadCategories = async () => {
+		const data = await getPostCategoriesRequest();
+		const categories = data?.categories || [];
+		this.setState({ categories });
+	};
+
 	handleTitleChange = ({ target }) => {
 		const post = { ...this.state.post, title: target.value };
+		this.setState({ post });
+	};
+
+	handleCategoryChange = ({ target }) => {
+		const post = { ...this.state.post, category: target.value };
 		this.setState({ post });
 	};
 
@@ -53,9 +67,10 @@ class AddPost extends React.Component {
 	createPost = async (e) => {
 		e.preventDefault();
 		this.setState({ postBtnDisabled: true });
-		const { title, postImage } = this.state.post;
+		const { title, category, postImage } = this.state.post;
 		const formData = new FormData();
 		formData.append("title", title);
+		formData.append("category", category);
 		formData.append("postImage", postImage);
 
 		const data = await addPostRequest(formData, this.props.user?.token);
@@ -63,9 +78,9 @@ class AddPost extends React.Component {
 			toast.success(data.message);
 			this.redirectToHome();
 		} else if (data.message) {
+			this.setState({ postBtnDisabled: false });
 			toast.error(data.message);
 		}
-		this.setState({ postBtnDisabled: false });
 	};
 
 	render() {
@@ -95,6 +110,27 @@ class AddPost extends React.Component {
 									onChange={this.handleTitleChange}
 									required
 								/>
+							</div>
+							<div className="mb-3">
+								<label
+									htmlFor="post-category"
+									className="form-label"
+								>
+									Post Category
+								</label>
+								<select
+									id="post-category"
+									name="category"
+									className="form-select"
+									value={this.state.category}
+									onChange={this.handleCategoryChange}
+								>
+									{this.state.categories.map((cat) => (
+										<option value={cat.id} key={cat.id}>
+											{cat.name}
+										</option>
+									))}
+								</select>
 							</div>
 							<div className="mb-3">
 								<label

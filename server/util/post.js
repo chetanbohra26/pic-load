@@ -1,8 +1,11 @@
 const { Post } = require("../models/post");
 
-const getPosts = async () => {
+const getPosts = async (category) => {
 	try {
 		const posts = await Post.aggregate([
+			{
+				$match: { category },
+			},
 			{
 				$lookup: {
 					from: "users",
@@ -16,6 +19,7 @@ const getPosts = async () => {
 					title: 1,
 					postImage: 1,
 					createdAt: 1,
+					category: 1,
 					author: { $first: "$user.name" },
 				},
 			},
