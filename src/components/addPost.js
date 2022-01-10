@@ -19,8 +19,10 @@ class AddPost extends React.Component {
 	componentDidMount() {
 		if (!this.props.user?.id) this.redirectToLogin(true);
 
-		if (!this.props.user?.isVerified)
+		if (!this.props.user?.isVerified) {
+			toast.error("Need to verify email first");
 			this.props.history?.replace(ROUTES.VERIFYUSER);
+		}
 	}
 
 	redirectToLogin = (toReturn = false) => {

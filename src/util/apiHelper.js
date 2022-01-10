@@ -113,4 +113,33 @@ export const verifyOTPRequest = async (token, otp) => {
 	return res;
 };
 
+export const createPassOTPRequest = async (email) => {
+	const res = await requestHandler({
+		url: "/auth/createPasswordOTP",
+		method: "POST",
+		data: {
+			email,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
+export const submitPassOTPRequest = async (email, otp, newPass, newPass2) => {
+	const res = await requestHandler({
+		url: "/auth/verifyPasswordOTP",
+		method: "POST",
+		data: {
+			email,
+			otp,
+			newPass,
+			newPass2,
+		},
+	});
+
+	//console.log(res);
+	return res;
+};
+
 export const getUploadUrl = (postImage) => `${API_URL}/uploads/${postImage}`;

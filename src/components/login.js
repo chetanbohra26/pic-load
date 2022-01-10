@@ -6,6 +6,7 @@ import ROUTES from "../config/routeConfig.json";
 
 import { loginRequest, registerRequest } from "../util/apiHelper";
 import { fetchTokenAndData, saveToken } from "../util/token";
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
 	constructor(props) {
@@ -208,7 +209,7 @@ class Login extends React.Component {
 							id="register-c-password"
 							name="pass2"
 							className="form-control"
-							placeholder="(min 6 characters)"
+							placeholder="(same as password)"
 							value={register.pass2}
 							onChange={this.handleRegisterChange}
 							required
@@ -273,10 +274,24 @@ class Login extends React.Component {
 							</li>
 						</ul>
 					</div>
-					<div className="card-body">
+					<div className="card-body d-flex flex-column">
 						{this.state.isLogin
 							? this.getLoginContent()
 							: this.getRegisterContent()}
+						<Link
+							to={ROUTES.HOME}
+							className="align-self-center mt-1"
+						>
+							Continue without login
+						</Link>
+						{this.state.isLogin && (
+							<Link
+								to={ROUTES.FORGOTPASS}
+								className="align-self-center mt-1"
+							>
+								Forgot Password
+							</Link>
+						)}
 					</div>
 				</div>
 			</div>
