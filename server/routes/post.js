@@ -84,9 +84,11 @@ router.post("/createPost", verifyUser, async (req, res) => {
 
 router.get("/postCategories", (req, res) => {
 	const categories = (post && post.categories) || [];
+	const defaultCategory = (post && post.defaultCategory) || "";
 	res.json({
 		success: true,
 		categories,
+		defaultCategory,
 	});
 });
 
