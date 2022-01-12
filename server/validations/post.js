@@ -13,7 +13,7 @@ const postSchema = Joi.object({
 	category: Joi.string()
 		.required()
 		.trim()
-		.error(() => new PicLoadError("Title is missing", 400)),
+		.error(() => new PicLoadError("Category is missing", 400)),
 	postImage: Joi.string()
 		.required()
 		.trim()
