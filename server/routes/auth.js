@@ -103,6 +103,7 @@ router.post("/createPasswordOTP", async (req, res) => {
 			});
 
 		const otp = await sendOtp(email);
+		if (!otp) throw new PicLoadError("Could not generate OTP", 500);
 
 		let record = await ForgotPassUser.findOne({ email });
 		if (!record) {
