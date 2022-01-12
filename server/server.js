@@ -22,11 +22,13 @@ app.use(express.json());
 
 app.use("/uploads", express.static(path.join(__dirname, "./../uploads")));
 
-app.get("/", (req, res) => {
-	res.status(200).json({ success: true, msg: "Welcome to pic-load api" });
-});
-
 app.use("/api", apiRouter);
+
+app.use(express.static(path.join(__dirname, "./../build")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "./../build", "index.html"));
+});
 
 const PORT = process.env.PORT || 7500;
 app.listen(PORT, (err) => {
