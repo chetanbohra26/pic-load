@@ -46,7 +46,8 @@ class AddPost extends React.Component {
 	loadCategories = async () => {
 		const data = await getPostCategoriesRequest();
 		const categories = data?.categories || [];
-		this.setState({ categories });
+		const post = { ...this.state.post, category: data?.defaultCategory };
+		this.setState({ categories, post });
 	};
 
 	handleTitleChange = ({ target }) => {
