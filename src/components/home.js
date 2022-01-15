@@ -68,7 +68,10 @@ class Home extends React.Component {
 	}
 	render() {
 		return (
-			<div className="d-flex flex-row flex-fill container-xl justify-content-center">
+			<div
+				className="d-flex flex-row flex-fill container-xl justify-content-center overflow-hidden"
+				style={{ height: "0vh" }}
+			>
 				{this.state.categories.length > 0 && (
 					<div className="d-none d-lg-flex flex-column mt-4 me-2 ms-lg-2 col-2 absolute-top">
 						<ul className="list-group">
@@ -91,7 +94,7 @@ class Home extends React.Component {
 					</div>
 				)}
 				{this.state.posts.length > 0 ? (
-					<div className="d-flex flex-column mt-4 col-sm-12 col-lg-10">
+					<div className="d-flex flex-column mt-4 col-sm-12 col-lg-10 overflow-auto">
 						{this.state.posts.map((post) => (
 							<Post key={post._id} post={post} />
 						))}
