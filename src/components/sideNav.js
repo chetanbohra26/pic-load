@@ -8,7 +8,7 @@ const sideNav = ({ children, onClose = log }) => {
 			style={{ zIndex: 2000 }}
 		>
 			<div className="d-flex flex-column bg-dark">
-				<div className="d-flex flex-fill text-light">
+				<div className="d-flex text-light">
 					<span className="d-flex flex-fill fs-2 p-2">
 						Categories
 					</span>

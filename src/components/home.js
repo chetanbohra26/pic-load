@@ -88,7 +88,10 @@ class Home extends React.Component {
 							<div className="d-flex flex-column p-2 overflow-auto">
 								{this.state.categories.map((cat) => (
 									<button
-										className="p-2 btn btn-dark w-100 mb-1 text-start"
+										className={`p-2 btn btn-dark w-100 mb-1 text-start ${
+											this.state.activeCat === cat.id &&
+											"fw-bolder bg-light text-dark"
+										}`}
 										key={cat.id}
 										onClick={() => this.loadCat(cat.id)}
 									>
